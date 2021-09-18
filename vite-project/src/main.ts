@@ -83,7 +83,7 @@ const createElements = (data: DataResult): void => {
 };
 
 const createOfTab = ({ data }: DataResult): void => {
-  data.reduce((prev, current, index) => {
+  data.reduce((prev, _current, index) => {
     const tabItemLi = document.createElement("li");
     tabItemLi.classList.add("tab_item");
     tabItemLi.dataset.id = data[index].id;
@@ -95,7 +95,7 @@ const createOfTab = ({ data }: DataResult): void => {
 };
 
 const createOfTabContents = ({ data }: DataResult): void => {
-  data.reduce((prev, current, index) => {
+  data.reduce((prev, _current, index) => {
     const tabContentLi = document.createElement("li");
     tabContentLi.classList.add("tab_content");
     tabContentLi.id = data[index].id;
@@ -126,7 +126,7 @@ const createOfTabContents = ({ data }: DataResult): void => {
 };
 
 const displayOfCategoryImage = ({ data }: DataResult): void => {
-  data.reduce((prev, current, index) => {
+  data.reduce((prev, _current, index) => {
     const tabContentList = document.getElementById(`${data[index].id}`);
     const tabContentImgP = document.createElement("p");
     tabContentImgP.classList.add("tab_content_img");
@@ -138,7 +138,7 @@ const displayOfCategoryImage = ({ data }: DataResult): void => {
 };
 
 const addIsNewIcon = ({ data }: DataResult): void => {
-  data.reduce((prev, current, index) => {
+  data.reduce((prev, _current, index) => {
     for (let i = 0; i < data[index].articles.length; i++) {
       const setIsNew = data[index].articles[i].isNew;
       const tabContentDescriptionP = document.getElementById(
@@ -156,7 +156,7 @@ const addIsNewIcon = ({ data }: DataResult): void => {
 };
 
 const numberOfDisplayComments = ({ data }: DataResult): void => {
-  data.reduce((prev, current, index) => {
+  data.reduce((prev, _current, index) => {
     for (let i = 0; i < data[index].articles.length; i++) {
       const setCommentCount = data[index].articles[i].commentCount;
       const tabContentDescriptionP = document.getElementById(
@@ -179,7 +179,7 @@ const numberOfDisplayComments = ({ data }: DataResult): void => {
 const InitialSettingOfTab = ({ data }: DataResult): void => {
   const tabTriggers = document.querySelectorAll(".tab_item");
   const tabTargets = document.querySelectorAll(".tab_content");
-  data.reduce((prev, current, index) => {
+  data.reduce((prev, _current, index) => {
     if (data[index].isActive == true) {
       tabTriggers[index].classList.add("is-active");
       tabTargets[index].classList.add("is-show");
