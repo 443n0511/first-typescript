@@ -58,30 +58,6 @@ const fetchContentsData: FetchContentsData = async () => {
   }
 };
 
-const init = async (): Promise<void> => {
-  try {
-    const data: DataResult | null = await fetchContentsData();
-    if (data) {
-      createElements(data);
-    } else {
-      tabsUl.innerHTML = "data is empty";
-    }
-  } catch (e) {
-    tabsUl.innerHTML = `error is ${e}`;
-  }
-};
-init();
-
-const createElements = (data: DataResult): void => {
-  createOfTab(data);
-  createOfTabContents(data);
-  displayOfCategoryImage(data);
-  InitialSettingOfTab(data);
-  addIsNewIcon(data);
-  numberOfDisplayComments(data);
-  tabSwitch();
-};
-
 const createOfTab = ({ data }: DataResult): void => {
   data.reduce((prev, _current, index) => {
     const tabItemLi = document.createElement("li");
@@ -208,9 +184,33 @@ const tabSwitch = (): void => {
           tabTargets.forEach((tabTarget) => {
             tabTarget.classList.remove("is-show");
           });
-          currentContent && currentContent.classList.add("is-show");
+          currentContent?.classList.add("is-show");
         }
       }
     });
   });
 };
+
+const createElements = (data: DataResult): void => {
+  createOfTab(data);
+  createOfTabContents(data);
+  displayOfCategoryImage(data);
+  InitialSettingOfTab(data);
+  addIsNewIcon(data);
+  numberOfDisplayComments(data);
+  tabSwitch();
+};
+
+const init = async (): Promise<void> => {
+  try {
+    const data: DataResult | null = await fetchContentsData();
+    if (data) {
+      createElements(data);
+    } else {
+      tabsUl.innerHTML = "data is empty";
+    }
+  } catch (e) {
+    tabsUl.innerHTML = `error is ${e}`;
+  }
+};
+init();
