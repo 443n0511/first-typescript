@@ -1,6 +1,7 @@
 import "./style.css";
 
 const toDomUl = document.getElementById("js-parent");
+const URL = "https://jsondata.okiba.me/v1/json/ESt5M210611071002";
 
 //カテゴリタブ
 const tabsUl = document.createElement("ul");
@@ -39,9 +40,8 @@ type DataResult = {
     }
   ];
 };
-type FetchContentsData = () => Promise<DataResult | null>;
-const URL = "https://jsondata.okiba.me/v1/json/ESt5M210611071002";
 
+type FetchContentsData = () => Promise<DataResult | null>;
 const fetchContentsData: FetchContentsData = async () => {
   try {
     const response = await fetch(URL);
@@ -58,7 +58,9 @@ const fetchContentsData: FetchContentsData = async () => {
   }
 };
 
-const createOfTab = ({ data }: DataResult): void => {
+type CreateContents = (data: DataResult) => void;
+
+export const createOfTab: CreateContents = ({ data }) => {
   data.reduce((prev, _current, index) => {
     const tabItemLi = document.createElement("li");
     tabItemLi.classList.add("tab_item");
@@ -70,7 +72,7 @@ const createOfTab = ({ data }: DataResult): void => {
   tabsUl.appendChild(tabsFragment);
 };
 
-const createOfTabContents = ({ data }: DataResult): void => {
+export const createOfTabContents: CreateContents = ({ data }) => {
   data.reduce((prev, _current, index) => {
     const tabContentLi = document.createElement("li");
     tabContentLi.classList.add("tab_content");
@@ -101,7 +103,7 @@ const createOfTabContents = ({ data }: DataResult): void => {
     .appendChild(contentsFragment);
 };
 
-const displayOfCategoryImage = ({ data }: DataResult): void => {
+export const displayOfCategoryImage: CreateContents = ({ data }) => {
   data.reduce((prev, _current, index) => {
     const tabContentList = document.getElementById(`${data[index].id}`);
     const tabContentImgP = document.createElement("p");
@@ -113,7 +115,7 @@ const displayOfCategoryImage = ({ data }: DataResult): void => {
   }, []);
 };
 
-const addIsNewIcon = ({ data }: DataResult): void => {
+export const addIsNewIcon: CreateContents = ({ data }) => {
   data.reduce((prev, _current, index) => {
     for (let i = 0; i < data[index].articles.length; i++) {
       const setIsNew = data[index].articles[i].isNew;
@@ -131,7 +133,7 @@ const addIsNewIcon = ({ data }: DataResult): void => {
   }, []);
 };
 
-const numberOfDisplayComments = ({ data }: DataResult): void => {
+export const numberOfDisplayComments: CreateContents = ({ data }) => {
   data.reduce((prev, _current, index) => {
     for (let i = 0; i < data[index].articles.length; i++) {
       const setCommentCount = data[index].articles[i].commentCount;
@@ -152,7 +154,7 @@ const numberOfDisplayComments = ({ data }: DataResult): void => {
   }, []);
 };
 
-const InitialSettingOfTab = ({ data }: DataResult): void => {
+export const InitialSettingOfTab: CreateContents = ({ data }) => {
   const tabTriggers = document.querySelectorAll(".tab_item");
   const tabTargets = document.querySelectorAll(".tab_content");
   data.reduce((prev, _current, index) => {
@@ -191,7 +193,7 @@ const tabSwitch = (): void => {
   });
 };
 
-const createElements = (data: DataResult): void => {
+export const createElements: CreateContents = (data) => {
   createOfTab(data);
   createOfTabContents(data);
   displayOfCategoryImage(data);
